@@ -1,11 +1,17 @@
-import logo from './logo.svg';
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
   return (
-    <div className="text-red-600">
-     Hello project
-    </div>
+    <>
+      <Header/>
+          <main>
+             <Outlet/>
+        </main>   
+      <Footer/>
+    </>
   );
 }
 
