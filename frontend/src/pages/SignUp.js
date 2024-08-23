@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import loginIcons from '../assest/signin.gif'
-import { Form, Link } from 'react-router-dom'
+import {Link } from 'react-router-dom'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import imageTobase64 from '../helpers/imageTobase64';
+import SummaryApi from '../common';
 const SignUp = () => {
 
     const [showPassword,setShowPassword] = useState(false);
@@ -27,10 +28,35 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit=(e)=>{
-        e.preventDefault()
-        console.log(data);
-    }
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      if (data.password === data.confirmPassword) {
+          try {
+              const dataResponse = await fetch(SummaryApi.signUP.url, {
+                  method: SummaryApi.signUP.method,
+                  headers: {
+                      "Content-Type": "application/json" // Correct content type for JSON data
+                  },
+                  body: JSON.stringify(data)
+              });
+  
+              if (!dataResponse.ok) {
+                  // If the response status is not in the 200-299 range, throw an error
+                  throw new Error(`Bad Request: ${dataResponse.statusText}`);
+              }
+  
+              const dataApi = await dataResponse.json();
+              console.log(dataApi);
+  
+          } catch (error) {
+              console.error("Error:", error.message);
+          }
+      } else {
+          console.log("Please check password and confirm password");
+      }
+  };
+  
     
     const handleUploadPic = async(e) =>{
       const file = e.target.files[0]
@@ -65,7 +91,7 @@ const SignUp = () => {
                 
                
             </div>
-            <Form className='pt-6 flex flex-col gap-3' onSubmit={handleSubmit}>
+            <form className='pt-6 flex flex-col gap-3' onSubmit={handleSubmit}>
             <div className='grid'>
                     <label>Name</label>
                      <div className='bg-slate-100 p-2'>
@@ -103,7 +129,7 @@ const SignUp = () => {
                  </div>
                  <p className='py-5'>You have already account ? <Link to={'/login'} className=' text-red-600 hover:text-red-600 hover:underline'>Login</Link></p>
               
-            </Form>                
+            </form>                
          </div>
      </div>
 </section>
