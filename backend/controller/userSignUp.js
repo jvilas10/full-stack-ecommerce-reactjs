@@ -31,6 +31,7 @@ async function userSignUpController(req, res) {
             email,
             name,
             password: hashPassword,
+            role:"GENERAL",
             profilePic: req.body.profilePic || "" // Optional field
         };
 
