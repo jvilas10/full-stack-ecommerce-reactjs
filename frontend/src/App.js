@@ -9,15 +9,16 @@ import Context from './context';
 function App() {
    
   const fetchUserDetails = async()=>{
-  
     const dataResponse = await fetch(SummaryApi.current_user.url,{
       method : SummaryApi.current_user.method,
       credentials : 'include'
     })
+
     const dataApi = await dataResponse.json()
-    console.log('dataApi',dataApi)
+    console.log('dataApi',dataApi);
+
     if(dataApi.success){
-      //dispatch(setUserDetails(dataApi.data))
+     
     }
 }
 
@@ -29,7 +30,7 @@ function App() {
 
   return (
     <>
-    <Context.Provider value={{ fetchUserDetails}}>
+    <Context.Provider value={{ fetchUserDetails }}>
       <Header/>
           <main className='min-h-[calc(100vh-100px)]'>
              <Outlet/>
