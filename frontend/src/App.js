@@ -5,9 +5,11 @@ import './App.css';
 import { useEffect } from 'react';
 import SummaryApi from './common';
 import Context from './context';
+import { useDispatch } from 'react-redux'
+import { setUserDetails } from './store/userSlice';
 
 function App() {
-   
+  const dispatch = useDispatch()
   const fetchUserDetails = async()=>{
     const dataResponse = await fetch(SummaryApi.current_user.url,{
       method : SummaryApi.current_user.method,
@@ -15,10 +17,10 @@ function App() {
     })
 
     const dataApi = await dataResponse.json()
-    console.log('dataApi',dataApi);
+    console.log('dataApi',dataApi?.data);
 
     if(dataApi.success){
-     
+      dispatch(setUserDetails(dataApi?.data))
     }
 }
 
