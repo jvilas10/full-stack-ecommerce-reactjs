@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { FaRegUserCircle } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const AdminPanel = () => {
     const user=useSelector(state=>state?.user?.user)
@@ -25,7 +25,9 @@ const AdminPanel = () => {
                     </nav>
                 </div>  
        </aside> 
-       <main>main</main>
+       <main className='w-full h-full p-4'>
+        <Outlet/>
+       </main>
     </div>
   )
 }
