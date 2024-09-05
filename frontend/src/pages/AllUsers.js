@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react'
 import SummaryApi from '../common'
 import moment from 'moment'
 import { MdModeEdit } from "react-icons/md";
-import ChangeUserRole from './ChangeUserRole';
+import ChangeUserRole from '../components/ChangeUserRole';
 
 const AllUsers = () => {
   const [allUser, setAllUsers]=useState([]);
+  const [openUpdateRole,setOpenUpdateRole]=useState(false);
+  const [updateUserDetails,setUpdateUserDetails]=useState({
+    email : "",
+    name : "",
+    role : "",
+    _id  : ""
+  })
  
   const fetchAllUsers=async()=>{
     const fetchData= await fetch(SummaryApi.allUser.url,{
@@ -45,14 +52,28 @@ const AllUsers = () => {
                 <td>{item?.email}</td>
                 <td>{item?.role}</td>
                 <td>{moment(item?.updatedAt).format('L')}</td>
-                <td><button className=' bg-green-100 p-1 rounded-full cursor-pointer hover:bg-green-400 hover:text-white'><MdModeEdit /></button></td>
+                <td><button className=' bg-green-100 p-1 rounded-full cursor-pointer hover:bg-green-400 hover:text-white'  onClick={()=>{
+                                        setUpdateUserDetails(item)
+                                        setOpenUpdateRole(true)
+
+                                    }}><MdModeEdit /></button></td>
               </tr>
             )
           })
         }
         </tbody>
       </table>
-      <ChangeUserRole/>
+      {
+        openUpdateRole && (<ChangeUserRole 
+            onClose={()=>{setOpenUpdateRole(false)}}
+            name={updateUserDetails.name}
+            email={updateUserDetails.email}
+            role={updateUserDetails.role}
+            userId={updateUserDetails._id}
+            callFanc={fetchAllUsers}
+        />)
+      }
+      
 
     </div>
   )
