@@ -38,7 +38,7 @@ if(responseData.success){
     <div  className='fixed top-0 bottom-0 left-0 right-0 w-full h-full z-10 flex justify-between items-center bg-slate-200 bg-opacity-50'>
  
         <div className='mx-auto bg-white shadow-md p-4 w-full max-w-sm'>
-        <button className='block ml-auto' onClick={onClose}>
+        <button className='block ml-auto hover:text-red-600' onClick={onClose}>
           <IoIosClose />
           </button>
                <h1 className='pb-4 text-lg font-medium'>Change User Role</h1>
